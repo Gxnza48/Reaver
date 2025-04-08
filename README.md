@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Phishing Tool - Reaver</h1>
-  <p><code>Python tool for Windows & Kali Linux</code></p>
+  <p><code>Python tool for Windows </code></p>
 </div>
 
 ---
@@ -24,7 +24,7 @@ It should only be used for penetration testing in controlled environments with p
 
 ## 🧠 What is Reaver?
 
-**Reaver** is a phishing tool developed in **Python** designed for **Windows** and **Kali Linux** systems. It provides an interactive terminal environment and facilitates capturing sensitive data in a controlled and ethical manner.
+**Reaver** is a phishing tool developed in **Python** designed for **Windows**  systems. It provides an interactive terminal environment and facilitates capturing sensitive data in a controlled and ethical manner.
 
 ---
 
