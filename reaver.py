@@ -24,9 +24,9 @@ log = logging.getLogger('werkzeug')
 log.disabled = True
 app.logger.disabled = True
 
-NGROK_PATH = r"C:\Users\Gonzalo\Desktop\Python 2024\reaver\ngrok.exe"
+NGROK_PATH = r"C:\pathhere/ngrok.exe"
 NGROK_API = "http://127.0.0.1:4040/api/tunnels"
-NGROK_AUTH_TOKEN = "2vSGHGpvcx98xd7QZ3MejUn1YTU_5vYyVjiQizamfYb4cyb1W"
+NGROK_AUTH_TOKEN = "Your token here"
 
 
 global_map = folium.Map(location=[40.7128, -74.0060], zoom_start=3)
