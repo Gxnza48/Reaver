@@ -38,7 +38,8 @@ It should only be used for penetration testing in controlled environments with p
 ---
 
 ## 🚀 Installation and Usage
-
+(You must have to instal ngrok)
+And change your user token
 (Not have to install python)
 - **To run the tool**:  
   1. Go to the [download page](https://reaver.onrender.com/).
